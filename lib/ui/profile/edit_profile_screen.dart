@@ -154,11 +154,11 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                   ? const CircularProgressIndicator() // Display progress indicator while uploading
                   : _selectedImage != null
                   ? CircleAvatar(
-                radius: 40,
+                radius: 60,
                 backgroundImage: FileImage(_selectedImage!),
               )
                   : CircleAvatar(
-                radius: 40,
+                radius: 60,
                 backgroundImage: NetworkImage(widget.userImage),
               ),
             ),

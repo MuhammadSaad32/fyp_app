@@ -67,103 +67,133 @@ class AdDetailsScreen extends StatelessWidget {
                     ),
                 ),
             SizedBox(height: getHeight(16)),
-            Text(
-              'Title*',
-              style: kSize20BlackW700Text,
-            ),
-            SizedBox(
-              height: getHeight(10),
-            ),
-            Text(
-              adData['title'],
-              style: TextStyle(
-                fontSize: getFont(18),
-                fontWeight: FontWeight.w500,
-                color: hintText,
+            Card(
+              elevation: 4,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: ListTile(
+                title: Text(
+                  'Title*',
+                  style: kSize20BlackW700Text,
+                ),
+                subtitle: Text(
+                  adData['title'],
+                  style: TextStyle(
+                    fontSize: getFont(18),
+                    fontWeight: FontWeight.w500,
+                    color: hintText,
+                  ),
+                ),
               ),
             ),
             SizedBox(height: getHeight(16)),
-            Text(
-              'Category*',
-              style: kSize20BlackW700Text,
-            ),
-            SizedBox(
-              height: getHeight(10),
-            ),
-            Text(
-              adData['category'],
-              style: TextStyle(
-                fontSize: getFont(18),
-                fontWeight: FontWeight.w500,
-                color: hintText,
+            Card(
+              elevation: 4,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: ListTile(
+                title: Text(
+                  'Category*',
+                  style: kSize20BlackW700Text,
+                ),
+                subtitle: Text(
+                  adData['category'],
+                  style: TextStyle(
+                    fontSize: getFont(18),
+                    fontWeight: FontWeight.w500,
+                    color: hintText,
+                  ),
+                ),
               ),
             ),
             const SizedBox(height: 8),
-            Text(
-              'Description*',
-              style: kSize20BlackW700Text,
-            ),
-            SizedBox(
-              height: getHeight(10),
-            ),
-            Text(
-              adData['description'],
-              style: TextStyle(
-                fontSize: getFont(18),
-                fontWeight: FontWeight.w500,
-                color: hintText,
+            Card(
+              elevation: 4,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
               ),
-              textAlign: TextAlign
-                  .justify, // Aligns text to justify (divides into new lines)
+              child: ListTile(
+                title: Text(
+                  'Description*',
+                  style: kSize20BlackW700Text,
+                ),
+                subtitle: Text(
+                  adData['description'],
+                  style: TextStyle(
+                    fontSize: getFont(18),
+                    fontWeight: FontWeight.w500,
+                    color: hintText,
+                  ),
+                  textAlign: TextAlign.justify,
+                ),
+              ),
             ),
             const SizedBox(height: 8),
-            Text(
-              'Price*',
-              style: kSize20BlackW700Text,
-            ),
-            SizedBox(
-              height: getHeight(10),
-            ),
-            Text(
-              'RS ${adData['price']}',
-              style: TextStyle(
-                fontSize: getFont(18),
-                fontWeight: FontWeight.w500,
-                color: hintText,
+            Card(
+              elevation: 4,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: ListTile(
+                title: Text(
+                  'Price*',
+                  style: kSize20BlackW700Text,
+                ),
+                subtitle: Text(
+                  'RS ${adData['price']}',
+                  style: TextStyle(
+                    fontSize: getFont(18),
+                    fontWeight: FontWeight.w500,
+                    color: hintText,
+                  ),
+                ),
               ),
             ),
             SizedBox(height: getHeight(8)),
-            Text(
-              'Phone Number*',
-              style: kSize20BlackW700Text,
-            ),
-            SizedBox(
-              height: getHeight(10),
-            ),
-            Text(
-              '${adData['phoneNumber']}',
-              style: TextStyle(
-                fontSize: getFont(18),
-                fontWeight: FontWeight.w500,
-                color: hintText,
+            Card(
+              elevation: 4,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: ListTile(
+                title: Text(
+                  'Phone Number*',
+                  style: kSize20BlackW700Text,
+                ),
+                subtitle: Text(
+                  '${adData['phoneNumber']}',
+                  style: TextStyle(
+                    fontSize: getFont(18),
+                    fontWeight: FontWeight.w500,
+                    color: hintText,
+                  ),
+                ),
               ),
             ),
             SizedBox(height: getHeight(8)),
-            Text(
-              'Type*',
-              style: kSize20BlackW700Text,
-            ),
-            SizedBox(
-              height: getHeight(10),
-            ),
-            Text(
-              '${adData['type']}',
-              style: TextStyle(
-                fontSize: getFont(18),
-                fontWeight: FontWeight.w500,
-                color: hintText,
+            Card(
+              elevation: 4,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: ListTile(
+                title: Text(
+                  'Type*',
+                  style: kSize20BlackW700Text,
+                ),
+                subtitle: Text(
+                  '${adData['type']}',
+                  style: TextStyle(
+                    fontSize: getFont(18),
+                    fontWeight: FontWeight.w500,
+                    color: hintText,
+                  ),
+                ),
               ),
             ),
+
           ],
         ),
       ),
