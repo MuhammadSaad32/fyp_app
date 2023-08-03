@@ -11,6 +11,7 @@ import 'package:fyp_app_olx/utils/colors_utils.dart';
 
 import '../../utils/images_utils.dart';
 import '../../utils/text_styles.dart';
+import 'edit_profile_screen.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -49,7 +50,6 @@ class ProfileScreen extends StatelessWidget {
                     final lastName = snapshot.data!['last_name'];
                     final phoneNumber = snapshot.data!['phone'];
                     final userImage = snapshot.data!['image'];
-
                     return Padding(
                       padding:  EdgeInsets.symmetric(horizontal: getWidth(20)),
                       child: Column(
@@ -58,33 +58,60 @@ class ProfileScreen extends StatelessWidget {
                           SizedBox(height: getHeight(20),),
                           Padding(
                             padding: EdgeInsets.symmetric(horizontal: getWidth(20)),
-                            child: Row(
+                            child: Column(
                               children: [
-                                CircleAvatar(
-                                  radius: 40,
-                                  backgroundImage: NetworkImage(userImage ?? ''),
-                                ),
-                                SizedBox(width: getWidth(20)),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      '$firstName $lastName' ?? '',
-                                      style: const TextStyle(
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.bold,
+                                SizedBox(height: getHeight(20)),
+                                Padding(
+                                  padding: EdgeInsets.symmetric(horizontal: getWidth(20)),
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      SizedBox(height: getHeight(20)),
+                                      GestureDetector(
+                                        onTap: () {
+                                          Get.to(()=>EditProfileScreen(firstName: firstName,lastName:lastName,userImage:userImage,phoneNumber: phoneNumber,));
+                                        },
+                                        child: Row(
+                                          children: [
+                                            CircleAvatar(
+                                              radius: 40,
+                                              backgroundImage: NetworkImage(userImage ?? ''),
+                                            ),
+                                            SizedBox(width: getWidth(20)),
+                                            Expanded(
+                                              child: Column(
+                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                children: [
+                                                  Text(
+                                                    '$firstName $lastName' ?? '',
+                                                    style: const TextStyle(
+                                                      fontSize: 20,
+                                                      fontWeight: FontWeight.bold,
+                                                    ),
+                                                  ),
+                                                  SizedBox(height: getHeight(5)),
+                                                  Text(
+                                                    '$phoneNumber' ?? '',
+                                                    style: const TextStyle(
+                                                      fontSize: 16,
+                                                      fontWeight: FontWeight.bold,
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                            Icon(
+                                              Icons.edit,
+                                              color: Colors.grey,
+                                            ),
+                                          ],
+                                        ),
                                       ),
-                                    ),
-                                    SizedBox(height: getHeight(5),),
-                                    Text(
-                                      '$phoneNumber' ?? '',
-                                      style: const TextStyle(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                  ],
+                                      // Add other content here if needed...
+                                    ],
+                                  ),
                                 )
+                                // Add other content here if needed...
                               ],
                             ),
                           ),

@@ -14,13 +14,22 @@ class HomeController extends GetxController {
   }
   List<String> categories = [
     'All',
-    'Computer/Laptop & Accessories',
-    'Mobile Phones',
-    'Home Appliances',
-    'Property',
-    'Cars',
-    'Bikes',
-    'Others',
+    'Cats',
+    'Dogs',
+    'Doves',
+    'Ducks',
+    'Fertile Eggs',
+    'Finches',
+    'Fish',
+    'Hens',
+    'Horses',
+    'LiveStocks',
+    'Parrots',
+    'PeaCocks',
+    'Pet Food & Accessories',
+    'Pigeons',
+    'Rabbits',
+    'Others'
   ];
   int selectedIndex = 0;
   final CollectionReference adsCollection = FirebaseFirestore.instance.collection('ads');

@@ -11,9 +11,9 @@ import '../../widgets/custom_textField.dart';
 
 class PostAddScreen extends StatelessWidget {
   final String category;
-  final IconData icon;
+  //final IconData icon;
   final PostController controller = Get.find();
-  PostAddScreen({super.key, required this.category, required this.icon});
+  PostAddScreen({super.key, required this.category});
 
   @override
   Widget build(BuildContext context) {
@@ -85,11 +85,11 @@ class PostAddScreen extends StatelessWidget {
                       padding: const EdgeInsets.all(8.0),
                       child: Row(
                         children: [
-                          CircleAvatar(
+                          const CircleAvatar(
                               radius: 25,
                               backgroundColor: whiteColor,
                               child: Icon(
-                                icon,
+                                Icons.person,
                                 color: blackColor,
                               )),
                           SizedBox(

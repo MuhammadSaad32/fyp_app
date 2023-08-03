@@ -6,15 +6,15 @@ import '../utils/size_config.dart';
 import '../utils/text_utils.dart';
 
 class CustomButton extends StatelessWidget {
-  VoidCallback? function;
-  String title;
-  double? height;
-  double? width;
-  Color? buttonTextColor;
-  Color? containerColor;
-  Color?borderColor;
+  final VoidCallback? function;
+  final String title;
+  final double? height;
+  final double? width;
+  final Color? buttonTextColor;
+  final Color? containerColor;
+  final Color?borderColor;
 
-  CustomButton(
+  const CustomButton(
       {super.key,
         this.function,
         this.buttonTextColor,

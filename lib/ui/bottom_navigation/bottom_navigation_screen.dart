@@ -18,7 +18,7 @@ class _BottomNavigationScreenState extends State<BottomNavigationScreen> {
   List navBarScreens = [
     const HomeScreen(),
     const ChatHomeScreen(),
-    const PostScreen(),
+    PostScreen(),
     const FavouritesScreen(),
     const ProfileScreen(),
   ];
