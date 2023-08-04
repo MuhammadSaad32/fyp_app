@@ -188,7 +188,7 @@ class HomeScreen extends StatelessWidget {
                         ),
                       ),
                       SizedBox(
-                        height: 500,
+                        height: getHeight(600),
                         child: FutureBuilder<List<Map<String, dynamic>>>(
                           future: controller.searchController.text.isEmpty
                               ? controller.selectedIndex == 0
@@ -204,9 +204,46 @@ class HomeScreen extends StatelessWidget {
                             }
                             final myAds = adsSnapshot.data;
                             if (myAds == null || myAds.isEmpty) {
-                              return const SizedBox.shrink(child: Text("No Ads"));
+                              return Center(
+                                child: Container(
+                                  padding: const EdgeInsets.all(16),
+                                  decoration: BoxDecoration(
+                                    color: Colors.grey[200],
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      const Icon(
+                                        Icons.sentiment_very_dissatisfied,
+                                        color: Colors.grey,
+                                        size: 48,
+                                      ),
+                                      SizedBox(height: getHeight(16)),
+                                      Text(
+                                        "No Ads",
+                                        style: TextStyle(
+                                          fontSize: 24,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.grey[800],
+                                        ),
+                                      ),
+                                      SizedBox(height: getHeight(8)),
+                                      Text(
+                                        "Oops! There are no Ads available at the moment.",
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                          fontSize: 16,
+                                          color: Colors.grey[600],
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              );
                             }
-                            return Expanded(
+                            return SizedBox(
+                              height: getHeight(600),
                               child: GridView.builder(
                                 gridDelegate:
                                 const SliverGridDelegateWithFixedCrossAxisCount(

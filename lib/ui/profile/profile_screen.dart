@@ -26,10 +26,30 @@ class ProfileScreen extends StatelessWidget {
         centerTitle: true,
         automaticallyImplyLeading: true,
         backgroundColor: primaryColor,
+        actions: [
+          PopupMenuButton<String>(
+            onSelected: (value) {
+              if (value == 'logout') {
+                Get.find<AuthController>().logout();
+
+              }
+            },
+            itemBuilder: (BuildContext context) => [
+               PopupMenuItem<String>(
+                value: 'logout',
+                child: SizedBox(
+                    height: getHeight(50),
+                    width: getWidth(200),
+                    child: Text('Logout',style: kSize20BlackW700Text,)),
+              ),
+            ],
+          ),
+        ],
       ),
       body: GetBuilder<ProfileController>(builder: (controller) {
         return Padding(
-          padding:EdgeInsets.symmetric(horizontal: getWidth(1),vertical: getHeight(10)),
+          padding: EdgeInsets.symmetric(
+              horizontal: getWidth(1), vertical: getHeight(10)),
           child: Column(
             children: [
               Flexible(
@@ -51,56 +71,72 @@ class ProfileScreen extends StatelessWidget {
                     final phoneNumber = snapshot.data!['phone'];
                     final userImage = snapshot.data!['image'];
                     return Padding(
-                      padding:  EdgeInsets.symmetric(horizontal: getWidth(20)),
+                      padding: EdgeInsets.symmetric(horizontal: getWidth(20)),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          SizedBox(height: getHeight(20),),
+                          SizedBox(
+                            height: getHeight(20),
+                          ),
                           Padding(
-                            padding: EdgeInsets.symmetric(horizontal: getWidth(20)),
+                            padding:
+                                EdgeInsets.symmetric(horizontal: getWidth(20)),
                             child: Column(
                               children: [
                                 SizedBox(height: getHeight(20)),
                                 Padding(
-                                  padding: EdgeInsets.symmetric(horizontal: getWidth(20)),
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: getWidth(20)),
                                   child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
                                       SizedBox(height: getHeight(20)),
                                       GestureDetector(
                                         onTap: () {
-                                          Get.to(()=>EditProfileScreen(firstName: firstName,lastName:lastName,userImage:userImage,phoneNumber: phoneNumber,));
+                                          Get.to(() => EditProfileScreen(
+                                                firstName: firstName,
+                                                lastName: lastName,
+                                                userImage: userImage,
+                                                phoneNumber: phoneNumber,
+                                              ));
                                         },
                                         child: Row(
                                           children: [
                                             CircleAvatar(
                                               radius: 40,
-                                              backgroundImage: NetworkImage(userImage ?? ''),
+                                              backgroundImage:
+                                                  NetworkImage(userImage ?? ''),
                                             ),
                                             SizedBox(width: getWidth(20)),
                                             Expanded(
                                               child: Column(
-                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
                                                 children: [
                                                   Text(
-                                                    '$firstName $lastName' ?? '',
+                                                    '$firstName $lastName' ??
+                                                        '',
                                                     style: const TextStyle(
                                                       fontSize: 20,
-                                                      fontWeight: FontWeight.bold,
+                                                      fontWeight:
+                                                          FontWeight.bold,
                                                     ),
                                                   ),
-                                                  SizedBox(height: getHeight(5)),
+                                                  SizedBox(
+                                                      height: getHeight(5)),
                                                   Text(
                                                     '$phoneNumber' ?? '',
                                                     style: const TextStyle(
                                                       fontSize: 16,
-                                                      fontWeight: FontWeight.bold,
+                                                      fontWeight:
+                                                          FontWeight.bold,
                                                     ),
                                                   ),
                                                 ],
                                               ),
                                             ),
-                                            Icon(
+                                            const Icon(
                                               Icons.edit,
                                               color: Colors.grey,
                                             ),
@@ -115,12 +151,16 @@ class ProfileScreen extends StatelessWidget {
                               ],
                             ),
                           ),
-                          SizedBox(height: getHeight(20),),
+                          SizedBox(
+                            height: getHeight(20),
+                          ),
                           Text(
                             'My Ads*',
                             style: kSize20BlackW700Text,
                           ),
-                          SizedBox(height: getHeight(20),),
+                          SizedBox(
+                            height: getHeight(20),
+                          ),
                           Expanded(
                             child: FutureBuilder<List<DocumentSnapshot>>(
                               future: controller.getMyAds(),
@@ -179,46 +219,56 @@ class ProfileScreen extends StatelessWidget {
                                 return ListView.builder(
                                   itemCount: myAds.length,
                                   itemBuilder: (context, index) {
-                                    final adData =
-                                        myAds[index].data() as Map<String, dynamic>;
+                                    final adData = myAds[index].data()
+                                        as Map<String, dynamic>;
                                     final title = myAds[index]['title'];
                                     final category = myAds[index]['category'];
                                     final price = myAds[index]['price'];
                                     final imageUrls =
                                         adData['imageUrls'] as List<dynamic>?;
-                                    final imageUrl = (imageUrls != null && imageUrls.isNotEmpty)
-                                            ? imageUrls[0]
-                                            : '';
+                                    final imageUrl = (imageUrls != null &&
+                                            imageUrls.isNotEmpty)
+                                        ? imageUrls[0]
+                                        : '';
 
                                     return Padding(
                                       padding: const EdgeInsets.all(8.0),
                                       child: GestureDetector(
                                         onTap: () {
-                                          Get.to(() => AdDetailsScreen(adData: adData));
+                                          Get.to(() =>
+                                              AdDetailsScreen(adData: adData));
                                         },
-                                        child:Container(
+                                        child: Container(
                                           height: getHeight(150),
                                           decoration: BoxDecoration(
-                                            border: Border.all(color: Colors.grey, width: 1),
-                                            borderRadius: BorderRadius.circular(10),
+                                            border: Border.all(
+                                                color: Colors.grey, width: 1),
+                                            borderRadius:
+                                                BorderRadius.circular(10),
                                           ),
                                           child: Card(
                                             elevation: 4,
                                             shape: RoundedRectangleBorder(
-                                              borderRadius: BorderRadius.circular(10),
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
                                             ),
                                             child: Padding(
-                                              padding: const EdgeInsets.all(8.0),
+                                              padding:
+                                                  const EdgeInsets.all(8.0),
                                               child: Row(
-                                                crossAxisAlignment: CrossAxisAlignment.center,
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.center,
                                                 children: [
                                                   Container(
                                                     width: getWidth(100),
                                                     height: getHeight(100),
                                                     decoration: BoxDecoration(
-                                                      borderRadius: BorderRadius.circular(10),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              10),
                                                       image: DecorationImage(
-                                                        image: NetworkImage(imageUrl),
+                                                        image: NetworkImage(
+                                                            imageUrl),
                                                         fit: BoxFit.cover,
                                                       ),
                                                     ),
@@ -226,34 +276,49 @@ class ProfileScreen extends StatelessWidget {
                                                   SizedBox(width: getWidth(20)),
                                                   Expanded(
                                                     child: Column(
-                                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .start,
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .spaceEvenly,
                                                       children: [
                                                         Text(
                                                           title ?? '',
                                                           style: TextStyle(
-                                                            fontSize: getFont(18),
-                                                            fontWeight: FontWeight.bold,
+                                                            fontSize:
+                                                                getFont(18),
+                                                            fontWeight:
+                                                                FontWeight.bold,
                                                           ),
                                                           maxLines: 1,
-                                                          overflow: TextOverflow.ellipsis,
+                                                          overflow: TextOverflow
+                                                              .ellipsis,
                                                         ),
-                                                        SizedBox(height: getHeight(5)),
+                                                        SizedBox(
+                                                            height:
+                                                                getHeight(5)),
                                                         Text(
                                                           category ?? '',
                                                           style: TextStyle(
-                                                            fontSize: getFont(16),
+                                                            fontSize:
+                                                                getFont(16),
                                                             color: Colors.grey,
                                                           ),
                                                           maxLines: 1,
-                                                          overflow: TextOverflow.ellipsis,
+                                                          overflow: TextOverflow
+                                                              .ellipsis,
                                                         ),
-                                                        SizedBox(height: getHeight(5)),
+                                                        SizedBox(
+                                                            height:
+                                                                getHeight(5)),
                                                         Text(
                                                           'Rs $price' ?? '',
                                                           style: TextStyle(
-                                                            fontSize: getFont(18),
-                                                            fontWeight: FontWeight.bold,
+                                                            fontSize:
+                                                                getFont(18),
+                                                            fontWeight:
+                                                                FontWeight.bold,
                                                             color: primaryColor,
                                                           ),
                                                         ),
@@ -278,12 +343,20 @@ class ProfileScreen extends StatelessWidget {
                   },
                 ),
               ),
-              ProfileScreenWidget(text: 'Customer Support',image:MyImgs.logo2,ontap: (){
-                Get.to(()=>const CustomerSupportPage());
-              },),
-              ProfileScreenWidget(text: 'Log Out',image:MyImgs.logo2,ontap: (){
-                Get.find<AuthController>().logout();
-              },),
+              ProfileScreenWidget(
+                text: 'Customer Support',
+                image: MyImgs.logo2,
+                ontap: () {
+                  Get.to(() => const CustomerSupportPage());
+                },
+              ),
+              ProfileScreenWidget(
+                text: 'Log Out',
+                image: MyImgs.logo2,
+                ontap: () {
+                  Get.find<AuthController>().logout();
+                },
+              ),
             ],
           ),
         );
