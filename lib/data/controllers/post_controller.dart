@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:flutter/cupertino.dart';
+import 'package:fyp_app_olx/data/controllers/home_controller.dart';
 import 'package:fyp_app_olx/ui/bottom_navigation/bottom_navigation_screen.dart';
 import 'package:fyp_app_olx/ui/home/home_screen.dart';
 import 'package:fyp_app_olx/widgets/progress_bar.dart';
@@ -16,7 +17,105 @@ class PostController extends GetxController {
   FirebaseAuth auth = FirebaseAuth.instance;
   final FirebaseFirestore fireStore = FirebaseFirestore.instance;
   List<File> selectedImages = [];
-  var selectedContainer = 'used'.obs;
+  RxString selectedCity = 'Select City'.obs;
+  void updateSelectedCity(String city) {
+    selectedCity.value = city;
+  }
+  final List<String> cities = [
+    'Karachi',
+    'Lahore',
+    'Islamabad',
+    'Attock',
+    'Bahawalpur',
+    'Burewala',
+    'Chakwal',
+    'Chiniot',
+    'Dera Ghazi Khan',
+    'Faisalabad',
+    'Gujar Khan',
+    'Gujranwala',
+    'Gujrat',
+    'Jhang',
+    'Jhelum',
+    'Kasur',
+    'Khanewal',
+    'Kharian',
+    'Lahore',
+    'Mandi Bahauddin',
+    'Mianwali',
+    'Multan',
+    'Murree',
+    'Okara',
+    'Rahim Yar Khan',
+    'Rawalpindi',
+    'Sadiqabad',
+    'Sahiwal',
+    'Sargodha',
+    'Sheikhupura',
+    'Sialkot',
+    'Taxila',
+    'Toba Tek Singh',
+    'Badin',
+    'Hyderabad',
+    'Jacobabad',
+    'Karachi',
+    'Khairpur',
+    'Kotri',
+    'Larkana',
+    'Mirpur Khas',
+    'Nawabshah',
+    'Sukkur',
+    'Thatta',
+    'Abbottabad',
+    'Bannu',
+    'Battagram',
+    'Chitral',
+    'Charsadda',
+    'D.I.Khan',
+    'Haripur',
+    'Kohat',
+    'Mansehra',
+    'Mardan',
+    'Nowshera',
+    'Peshawar',
+    'Swat',
+    'Swabi',
+    'Timergara',
+    'Tank',
+    'Chaman',
+    'Gwadar',
+    'Khuzdar',
+    'Quetta',
+    'Ziarat',
+    'Bagh',
+    'Bhimber',
+    'Kotli',
+    'Mirpur',
+    'Muzaffarabad',
+    'Rawalakot',
+    'Gilgit',
+    'Skardu',
+  ];
+  List<String> categoriesPets = [
+    'Cats',
+    'Dogs',
+    'Doves',
+    'Ducks',
+    'Fertile Eggs',
+    'Finches',
+    'Fish',
+    'Hens',
+    'Horses',
+    'LiveStocks',
+    'Parrots',
+    'PeaCocks',
+    'Pet Food & Accessories',
+    'Pigeons',
+    'Rabbits',
+    'Others'
+  ];
+
+  var selectedContainer = 'Male'.obs;
   TextEditingController priceController = TextEditingController();
   TextEditingController titleController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
@@ -42,6 +141,9 @@ class PostController extends GetxController {
     }
     else if(titleController.text.isEmpty){
       CustomToast.failToast(msg: 'Please Enter Title');
+    }
+    else if(selectedCity.value=='Select City'){
+      CustomToast.failToast(msg: 'Please Select City');
     }
     else if(priceController.text.isEmpty){
       CustomToast.failToast(msg: 'Please Enter Price');
@@ -71,6 +173,9 @@ class PostController extends GetxController {
         Get.log("Image Url is $imageUrls");
         var uuid = const Uuid();
         var randomId = uuid.v4();
+        await Get.find<HomeController>().getCurrentUserAddress();
+        var address =Get.find<HomeController>().userAddress.value.toString();
+        Get.log("Address is $address");
         final addDetails = {
           'price': priceController.text,
           'title': titleController.text,
@@ -81,6 +186,8 @@ class PostController extends GetxController {
           'id': FirebaseAuth.instance.currentUser!.uid,
           'adId':randomId,
           'name':userName,
+          'city':selectedCity.value,
+          'address':address,
           'imageUrls': imageUrls,
         };
         Get.log("Data is $addDetails");

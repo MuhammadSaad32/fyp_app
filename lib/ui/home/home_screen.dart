@@ -367,7 +367,6 @@ class HomeScreen extends StatelessWidget {
                           },
                         ),
                       ),
-
                       // The rest of your widgets...
                     ],
                   ),

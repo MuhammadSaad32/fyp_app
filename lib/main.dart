@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:fyp_app_olx/ui/bottom_navigation/bottom_navigation_screen.dart';
 import 'package:fyp_app_olx/ui/splash/splash_screen.dart';
 import 'package:get/get.dart';
 import 'bindings/data_bindings.dart';

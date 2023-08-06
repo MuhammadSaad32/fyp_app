@@ -209,6 +209,7 @@ class RegisterScreen extends StatelessWidget {
                               Validators.passwordValidator(value!),
                           text: "********",
                           length: 40,
+                          obscureText: true,
                           keyboardType: TextInputType.emailAddress,
                           inputFormatters:
                               FilteringTextInputFormatter.singleLineFormatter,
@@ -233,16 +234,23 @@ class RegisterScreen extends StatelessWidget {
                             child: CustomButton(
                           title: 'Sign up',
                           function: () async {
-                            if (authController.signUpFormKey.currentState!
-                                .validate()) {
                               if(authController.image==null){
                                 CustomToast.failToast(msg: 'Please Upload Image');
+                              }
+                              else if(authController.firstNameController.text.isEmpty || authController.firstNameController.text.length<3){
+                                CustomToast.failToast(msg: 'Please Enter First Name');
+
+                              }
+                              else if(authController.lastNameController.text.isEmpty || authController.lastNameController.text.length<3){
+                                CustomToast.failToast(msg: 'Please Enter Last Name');
+                              }
+                              else if(authController.emailController.text.isEmpty){
+                                CustomToast.failToast(msg: 'Please Enter Email Address');
                               }
                              else{
                                await authController.uploadImage();
                                 authController.createAccountWithEmailAndPassword();
                              }
-                            }
                           },
                         )),
                         SizedBox(

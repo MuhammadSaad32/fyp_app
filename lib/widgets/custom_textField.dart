@@ -19,6 +19,7 @@ class CustomTextField extends StatefulWidget {
   bool? Readonly = false;
   final Widget? icon;
   final suffixIcon;
+  final preffixIcon;
   final InputBorder? border;
   final String? errorText;
   final FocusNode? focusNode;
@@ -46,6 +47,7 @@ class CustomTextField extends StatefulWidget {
     this.width,
     this.roundCorner,
     this.suffixIcon,
+    this.preffixIcon,
     this.bordercolor,
     this.background,
     this.controller,

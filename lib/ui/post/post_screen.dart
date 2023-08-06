@@ -3,28 +3,10 @@ import 'package:fyp_app_olx/ui/post/post_add_screen.dart';
 import 'package:fyp_app_olx/utils/colors_utils.dart';
 import 'package:fyp_app_olx/utils/size_config.dart';
 import 'package:get/get.dart';
-import 'package:fyp_app_olx/widgets/custom_category.dart';
 
+import '../../data/controllers/post_controller.dart';
 class PostScreen extends StatelessWidget {
-  final List<String> categoriesPets = [
-    'Cats',
-    'Dogs',
-    'Doves',
-    'Ducks',
-    'Fertile Eggs',
-    'Finches',
-    'Fish',
-    'Hens',
-    'Horses',
-    'LiveStocks',
-    'Parrots',
-    'PeaCocks',
-    'Pet Food & Accessories',
-    'Pigeons',
-    'Rabbits',
-    'Others'
-  ];
-
+  PostController controller = Get.find();
   PostScreen({super.key});
 
   @override
@@ -33,17 +15,17 @@ class PostScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: whiteColor,
       appBar: AppBar(
-        title: const Text("Post Screen"),
+        title: const Text("Post"),
         centerTitle: true,
         backgroundColor: primaryColor,
       ),
       body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: getWidth(20)),
-        child: Expanded(
+        padding: EdgeInsets.symmetric(horizontal: getWidth(5)),
+        child: SizedBox(
           child: ListView.builder(
-            itemCount: categoriesPets.length,
+            itemCount: controller.categoriesPets.length,
             itemBuilder: (context, index) {
-              final category = categoriesPets[index];
+              final category = controller.categoriesPets[index];
               return GestureDetector(
                 onTap: (){
                   Get.to(()=>PostAddScreen(category: category,));

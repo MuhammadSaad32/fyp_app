@@ -10,6 +10,7 @@ import '../../utils/size_config.dart';
 import '../../utils/text_styles.dart';
 import '../../widgets/custom_button.dart';
 import '../../widgets/custom_textField.dart';
+import '../../widgets/custom_toasts.dart';
 
 class LoginScreen extends StatelessWidget {
   final authController = Get.find<AuthController>();
@@ -56,7 +57,8 @@ class LoginScreen extends StatelessWidget {
                       controller: authController.emailController,
                       validator: (value) =>
                           Validators.emailValidator(value!),
-                      text: "example@gmail.com",
+                      text: "Email",
+                      icon: const Icon(Icons.email,color: primaryColor),
                       length: 40,
                       keyboardType: TextInputType.emailAddress,
                       inputFormatters: FilteringTextInputFormatter
@@ -76,8 +78,9 @@ class LoginScreen extends StatelessWidget {
                       controller: authController.passwordController,
                       validator: (value) =>
                           Validators.passwordValidator(value!),
-                      text: "********",
+                      text: "Password",
                       obscureText: true,
+                      icon: const Icon(Icons.password,color: primaryColor),
                       suffixIcon: Icons.visibility,
                       autovalidateMode: authController
                           .passwordController.text.isNotEmpty
@@ -99,14 +102,15 @@ class LoginScreen extends StatelessWidget {
                         child: CustomButton(
                           title: 'Sign in',
                           function: () {
-                            // Get.offAll(() => GeneralQuestionnaireScreen());
-                            FocusManager.instance.primaryFocus!.unfocus();
-                            if (authController.loginFormKey.currentState!
-                                .validate()) {
-                              // authController.resetPassword();
-                              authController.signInWithEmailAndPassword();
+                            if(authController.emailController.text.isEmpty){
+                              CustomToast.failToast(msg: 'Please Enter Email Address');
                             }
-                          },
+                            else if(authController.passwordController.text.isEmpty){
+                              CustomToast.failToast(msg: 'Please Enter Enter');
+                            }
+                            else {
+                              authController.signInWithEmailAndPassword();
+                            }},
                         )),
                     SizedBox(height: getHeight(22),),
                     Row(

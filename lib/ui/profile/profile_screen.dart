@@ -33,6 +33,9 @@ class ProfileScreen extends StatelessWidget {
                 Get.find<AuthController>().logout();
 
               }
+              else if (value=='Customer Support'){
+                Get.to(()=>const CustomerSupportPage());
+              }
             },
             itemBuilder: (BuildContext context) => [
                PopupMenuItem<String>(
@@ -41,6 +44,13 @@ class ProfileScreen extends StatelessWidget {
                     height: getHeight(50),
                     width: getWidth(200),
                     child: Text('Logout',style: kSize20BlackW700Text,)),
+              ),
+              PopupMenuItem<String>(
+                value: 'Customer Support',
+                child: SizedBox(
+                    height: getHeight(50),
+                    width: getWidth(200),
+                    child: Text('Customer Support',style: kSize20BlackW700Text,)),
               ),
             ],
           ),
@@ -342,20 +352,6 @@ class ProfileScreen extends StatelessWidget {
                     );
                   },
                 ),
-              ),
-              ProfileScreenWidget(
-                text: 'Customer Support',
-                image: MyImgs.logo2,
-                ontap: () {
-                  Get.to(() => const CustomerSupportPage());
-                },
-              ),
-              ProfileScreenWidget(
-                text: 'Log Out',
-                image: MyImgs.logo2,
-                ontap: () {
-                  Get.find<AuthController>().logout();
-                },
               ),
             ],
           ),

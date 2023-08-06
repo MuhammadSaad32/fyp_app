@@ -8,6 +8,7 @@ import 'package:fyp_app_olx/utils/colors_utils.dart';
 import 'package:fyp_app_olx/utils/size_config.dart';
 import 'package:fyp_app_olx/widgets/custom_button.dart';
 import 'package:get/get.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../../utils/text_styles.dart';
 
 class AdDetailsScreen extends StatelessWidget {
@@ -116,6 +117,49 @@ class AdDetailsScreen extends StatelessWidget {
               ),
               child: ListTile(
                 title: Text(
+                  'City*',
+                  style: kSize20BlackW700Text,
+                ),
+                subtitle: Text(
+                  '${adData['city']}',
+                  style: TextStyle(
+                    fontSize: getFont(18),
+                    fontWeight: FontWeight.w500,
+                    color: hintText,
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(height: 8),
+            Card(
+              elevation: 4,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: ListTile(
+                title: Text(
+                  'Address*',
+                  style: kSize20BlackW700Text,
+                ),
+                subtitle: Text(
+                  '${adData['address']}',
+                  style: TextStyle(
+                    fontSize: getFont(18),
+                    fontWeight: FontWeight.w500,
+                    color: hintText,
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(height: 8),
+
+            Card(
+              elevation: 4,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: ListTile(
+                title: Text(
                   'Description*',
                   style: kSize20BlackW700Text,
                 ),
@@ -193,7 +237,47 @@ class AdDetailsScreen extends StatelessWidget {
                 ),
               ),
             ),
-
+            SizedBox(height: getHeight(8)),
+            Container(
+              height: getHeight(100),
+              width: double.infinity,
+              decoration: BoxDecoration(
+                image: const DecorationImage(
+                  image: NetworkImage('https://i.pcmag.com/imagery/articles/01IB0rgNa4lGMBlmLyi0VP6-44.fit_lim.size_1600x900.v1643818850.jpg'), // Replace with your Google Maps static image URL
+                  fit: BoxFit.cover,
+                ),
+                borderRadius: BorderRadius.circular(20)
+              ),
+              child: Align(
+                alignment: Alignment.center,
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: InkWell(
+                    onTap: () async {
+                      String address = adData['address'];
+                      final String mapUrl = 'https://www.google.com/maps?q=$address';
+                      if (await canLaunch(mapUrl)) {
+                        await launch(mapUrl);
+                      } else {
+                        throw 'Could not launch $mapUrl';
+                      }
+                    },
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+                      decoration: BoxDecoration(
+                        color: primaryColor,
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      child: const Text(
+                        'See Location on Google Maps',
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            SizedBox(height: getHeight(20),)
           ],
         ),
       ),
