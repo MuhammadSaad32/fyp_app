@@ -4,6 +4,7 @@ import 'package:fyp_app_olx/data/controllers/auth_controller.dart';
 import 'package:fyp_app_olx/services/get_services.dart';
 import 'package:fyp_app_olx/ui/bottom_navigation/bottom_navigation_screen.dart';
 import 'package:fyp_app_olx/utils/colors_utils.dart';
+import 'package:fyp_app_olx/utils/images_utils.dart';
 import 'package:get/get.dart';
 import '../auth/login_screen.dart';
 
@@ -38,7 +39,7 @@ class _SplashScreenState extends State<SplashScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Center(child: Image.asset("assets/images/logo_2.png")),
+            Center(child: Image.asset(MyImgs.logo)),
           ],
         ));
   }

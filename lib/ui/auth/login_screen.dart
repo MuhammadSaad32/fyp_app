@@ -35,12 +35,14 @@ class LoginScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     SizedBox(
-                      height: getHeight(260),
+                      height: getHeight(50),
                     ),
+                    Image.asset(MyImgs.logo),
+                    SizedBox(height: getHeight(20),),
                     Center(
                       child: Text(
-                        "Sign in To Your Account",
-                        style: kSize24blackW400Text,
+                        "Sign In to Your Account",
+                        style: kSize20BlackW700Text,
                       ),
                     ),
                     SizedBox(
