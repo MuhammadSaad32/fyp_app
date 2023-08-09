@@ -163,9 +163,9 @@ class HomeScreen extends StatelessWidget {
                         //   controller: controller.searchController,
                         // ),
                         SizedBox(height: getHeight(10),),
-                        GetStorage().read('list')!=null?
+                        controller.storage!=null?
                         CarouselSlider(
-                          items: controller.storage.map((imageUrl) {
+                          items: controller.storage!.map((imageUrl) {
                             return Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Container(

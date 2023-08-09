@@ -42,7 +42,7 @@ class HomeController extends GetxController {
   final CollectionReference adsCollection = FirebaseFirestore.instance.collection('ads');
   final Map<String, bool> likedAds = {};
   List<Map<String, dynamic>> ads = [];
-  List storage = GetStorage().read('list');
+  List? storage = GetStorage().read('list');
 /// Fetch All Ads
   Future<List<Map<String, dynamic>>> fetchAllAds() async {
     try {
