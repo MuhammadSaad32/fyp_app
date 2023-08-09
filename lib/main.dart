@@ -3,11 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:fyp_app_olx/ui/bottom_navigation/bottom_navigation_screen.dart';
 import 'package:fyp_app_olx/ui/splash/splash_screen.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'bindings/data_bindings.dart';
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  await GetStorage.init();
   runApp(const MyApp());
 }
 

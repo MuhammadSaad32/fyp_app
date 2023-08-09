@@ -1,9 +1,12 @@
+import 'package:carousel_slider/carousel_slider.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:fyp_app_olx/data/controllers/home_controller.dart';
 import 'package:fyp_app_olx/utils/colors_utils.dart';
 import 'package:fyp_app_olx/utils/size_config.dart';
 import 'package:fyp_app_olx/utils/text_styles.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import '../../utils/images_utils.dart';
 import '../../widgets/custom_textField.dart';
 import '../post/add_detail_screen.dart';
@@ -103,10 +106,10 @@ class HomeScreen extends StatelessWidget {
                       children: [
                         Image.asset(MyImgs.logo),
                         Text(
-                          "ABEK",
+                          "A BEK",
                           style: kSize20BlackW700Text,
                         ),
-                        Icon(Icons.search)
+                        const Icon(Icons.search,color: Colors.white,)
 
                       ],
                     ),
@@ -149,15 +152,73 @@ class HomeScreen extends StatelessWidget {
                             ),
                           ),
                         ),
-                        SizedBox(height: getHeight(5)),
-                        CustomTextField(
-                          keyboardType: TextInputType.text,
-                          length: 500,
-                          text: 'Search',
-                          onChanged: (value) {
-                            controller.updateSearchTerm(value);
+                        //SizedBox(height: getHeight(5)),
+                        // CustomTextField(
+                        //   keyboardType: TextInputType.text,
+                        //   length: 500,
+                        //   text: 'Search',
+                        //   onChanged: (value) {
+                        //     controller.updateSearchTerm(value);
+                        //   },
+                        //   controller: controller.searchController,
+                        // ),
+                        SizedBox(height: getHeight(10),),
+                        GetStorage().read('list')!=null?
+                        CarouselSlider(
+                          items: controller.storage.map((imageUrl) {
+                            return Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  image: DecorationImage(
+                                    image: NetworkImage(imageUrl),
+                                    fit: BoxFit.contain,
+                                  ),
+                                ),
+                              ),
+                            );
+                          }).toList(),
+                          options: CarouselOptions(
+                            height: getHeight(100),
+                            enableInfiniteScroll: true,
+                            autoPlay: true,
+                          ),
+                        ):
+                        FutureBuilder<QuerySnapshot>(
+                          future: FirebaseFirestore.instance.collection('images').get(),
+                          builder: (context, snapshot) {
+                            if (snapshot.connectionState == ConnectionState.waiting) {
+                              return const Center(child: CircularProgressIndicator(color: primaryColor,));
+                            }
+                            if (snapshot.hasError) {
+                              return Center(child: Text('Error: ${snapshot.error}'));
+                            }
+                            final imageDocs = snapshot.data!.docs;
+                            final imageUrls = imageDocs.map((doc) => doc['url'] as String).toList();
+                            Get.log('imgurls length is ${imageUrls.length}');
+                            GetStorage().write('list', imageUrls);
+                            Get.log('imgurls index is ${imageUrls[0]}');
+                            return CarouselSlider(
+                              items: imageUrls.map((imageUrl) {
+                                return Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      image: DecorationImage(
+                                        image: NetworkImage(imageUrl),
+                                        fit: BoxFit.contain,
+                                      ),
+                                    ),
+                                  ),
+                                );
+                              }).toList(),
+                              options: CarouselOptions(
+                                height: getHeight(100),
+                                enableInfiniteScroll: true,
+                                autoPlay: true,
+                              ),
+                            );
                           },
-                          //controller: controller.searchController,
                         ),
                         SizedBox(
                           height: getHeight(60),
@@ -255,8 +316,7 @@ class HomeScreen extends StatelessWidget {
                               return SizedBox(
                                 height: getHeight(600),
                                 child: GridView.builder(
-                                  gridDelegate:
-                                  const SliverGridDelegateWithFixedCrossAxisCount(
+                                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                                     crossAxisCount: 2,
                                     crossAxisSpacing: 8.0,
                                     mainAxisSpacing: 8.0,
@@ -284,96 +344,86 @@ class HomeScreen extends StatelessWidget {
                                           border: Border.all(color: Colors.grey, width: 1),
                                           borderRadius: BorderRadius.circular(10),
                                         ),
-                                        child: Card(
-                                          elevation: 4,
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.circular(10),
-                                          ),
-                                          child: Padding(
-                                            padding: const EdgeInsets.all(
-                                                12.0), // Increased padding
-                                            child: Column(
-                                              crossAxisAlignment: CrossAxisAlignment.start,
-                                              mainAxisAlignment: MainAxisAlignment
-                                                  .spaceEvenly, // Center the content vertically
-                                              children: [
-                                                Expanded(
-                                                  child: Container(
-                                                    decoration: BoxDecoration(
-                                                      borderRadius:
-                                                      BorderRadius.circular(10),
-                                                      image: DecorationImage(
-                                                        image: NetworkImage(imageUrl),
-                                                        fit: BoxFit.cover,
-                                                      ),
-                                                    ),
-                                                  ),
+                                        child: Column(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: [
+                                            Container(
+                                              height: getHeight(100), // Adjust the height for the image container
+                                              width: double.infinity, // Full width
+                                              decoration: BoxDecoration(
+                                                borderRadius: BorderRadius.circular(10),
+                                                image: DecorationImage(
+                                                  image: NetworkImage(imageUrl),
+                                                  fit: BoxFit.cover,
                                                 ),
-                                                SizedBox(height: getHeight(10)),
-                                                Row(
-                                                  children: [
-                                                    SizedBox(
-                                                      width: getWidth(90),
-                                                      child: Text(
-                                                        title,
-                                                        style: TextStyle(
-                                                          fontSize: getFont(18),
-                                                          fontWeight: FontWeight.bold,
-                                                        ),
-                                                        maxLines: 1,
-                                                        overflow: TextOverflow.ellipsis,
-                                                      ),
-                                                    ),
-                                                    GestureDetector(
-                                                      onTap: () {
-                                                        if (isLiked) {
-                                                          controller
-                                                              .removeFromFavorites(adData);
-                                                        } else {
-                                                          controller.addToFavorites(adData);
-                                                        }
-                                                      },
-                                                      child: Icon(
-                                                        isLiked
-                                                            ? Icons.favorite
-                                                            : Icons.favorite_border,
-                                                        color: isLiked
-                                                            ? Colors.red
-                                                            : Colors.black,
-                                                      ),
-                                                    )
-                                                  ],
-                                                ),
-                                                SizedBox(height: getHeight(5)),
-                                                Text(
-                                                  category,
-                                                  style: TextStyle(
-                                                    fontSize:
-                                                    getFont(14), // Increased font size
-                                                    color: Colors.grey,
-                                                  ),
-                                                  maxLines: 1,
-                                                  overflow: TextOverflow.ellipsis,
-                                                ),
-                                                SizedBox(height: getHeight(5)),
-                                                Text(
-                                                  'Rs $price',
-                                                  style: TextStyle(
-                                                    fontSize:
-                                                    getFont(16), // Increased font size
-                                                    fontWeight: FontWeight.bold,
-                                                    color: primaryColor,
-                                                  ),
-                                                ),
-                                              ],
+                                              ),
                                             ),
-                                          ),
+                                            SizedBox(height: getHeight(5)),
+                                            Padding(
+                                              padding:EdgeInsets.symmetric(horizontal: getWidth(10)),
+                                              child: Row(
+                                                children: [
+                                                  SizedBox(
+                                                    width: getWidth(90),
+                                                    child: Text(
+                                                      title,
+                                                      style: const TextStyle(
+                                                        fontSize: 18,
+                                                        fontWeight: FontWeight.bold,
+                                                      ),
+                                                      maxLines: 1,
+                                                      overflow: TextOverflow.ellipsis,
+                                                    ),
+                                                  ),
+                                                  GestureDetector(
+                                                    onTap: () {
+                                                      if (isLiked) {
+                                                        controller.removeFromFavorites(adData);
+                                                      } else {
+                                                        controller.addToFavorites(adData);
+                                                      }
+                                                    },
+                                                    child: Icon(
+                                                      isLiked ? Icons.favorite : Icons.favorite_border,
+                                                      color: isLiked ? Colors.red : Colors.black,
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                            Padding(
+                                              padding:EdgeInsets.symmetric(horizontal: getWidth(10)),
+                                              child: Text(
+                                                category,
+                                                style: const TextStyle(
+                                                  fontSize: 14,
+                                                  color: Colors.grey,
+                                                ),
+                                                maxLines: 1,
+                                                overflow: TextOverflow.ellipsis,
+                                              ),
+                                            ),
+                                            SizedBox(height: getHeight(5)),
+                                            Padding(
+                                              padding:EdgeInsets.symmetric(horizontal: getWidth(10)),
+                                              child: Text(
+                                                'Rs $price',
+                                                style: TextStyle(
+                                                  fontSize: getFont(16),
+                                                  fontWeight: FontWeight.bold,
+                                                  color: primaryColor, // Replace with your primaryColor
+                                                ),
+                                              ),
+                                            ),
+                                          ],
                                         ),
                                       ),
                                     );
                                   },
                                 ),
                               );
+
+
                             },
                           ),
                         ),

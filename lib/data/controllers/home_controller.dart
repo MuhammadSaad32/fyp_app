@@ -4,6 +4,7 @@ import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:get_storage/get_storage.dart';
 
 class HomeController extends GetxController {
   RxString userAddress = RxString('');
@@ -12,6 +13,12 @@ class HomeController extends GetxController {
   void updateSearchTerm(String term) {
     searchTerm.value = term;
   }
+  bool isSearching = false;
+  void toggleSearch() {
+      isSearching = !isSearching;
+      update();
+      searchController.clear();
+    }
   List<String> categories = [
     'All',
     'Cats',
@@ -35,6 +42,7 @@ class HomeController extends GetxController {
   final CollectionReference adsCollection = FirebaseFirestore.instance.collection('ads');
   final Map<String, bool> likedAds = {};
   List<Map<String, dynamic>> ads = [];
+  List storage = GetStorage().read('list');
 /// Fetch All Ads
   Future<List<Map<String, dynamic>>> fetchAllAds() async {
     try {
