@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fyp_app_olx/data/controllers/auth_controller.dart';
 import 'package:fyp_app_olx/ui/post/add_detail_screen.dart';
 import 'package:fyp_app_olx/ui/profile/customer_support_screen.dart';
@@ -13,9 +14,14 @@ import '../../utils/images_utils.dart';
 import '../../utils/text_styles.dart';
 import 'edit_profile_screen.dart';
 
-class ProfileScreen extends StatelessWidget {
+class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
 
+  @override
+  State<ProfileScreen> createState() => _ProfileScreenState();
+}
+
+class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
@@ -234,6 +240,7 @@ class ProfileScreen extends StatelessWidget {
                                     final title = myAds[index]['title'];
                                     final category = myAds[index]['category'];
                                     final price = myAds[index]['price'];
+                                    final adId = myAds[index]['adId'];
                                     final imageUrls =
                                         adData['imageUrls'] as List<dynamic>?;
                                     final imageUrl = (imageUrls != null &&
@@ -335,6 +342,12 @@ class ProfileScreen extends StatelessWidget {
                                                       ],
                                                     ),
                                                   ),
+                                                  SizedBox(width: getWidth(20)),
+                                                  IconButton(onPressed: (){
+                                                    setState(() {
+                                                      controller.deleteAd(context, adId, FirebaseAuth.instance.currentUser!.uid);
+                                                    });
+                                                  },icon: const Icon(Icons.delete),)
                                                 ],
                                               ),
                                             ),

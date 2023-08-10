@@ -256,10 +256,9 @@ class AdDetailsScreen extends StatelessWidget {
                     onTap: () async {
                       String address = adData['address'];
                       final String mapUrl = 'https://www.google.com/maps?q=$address';
-                      if (await canLaunch(mapUrl)) {
-                        await launch(mapUrl);
-                      } else {
-                        throw 'Could not launch $mapUrl';
+                      Get.log("Url is $mapUrl");
+                      if (!await launchUrl(Uri.parse(mapUrl))) {
+                        throw Exception('Could not launch $mapUrl');
                       }
                     },
                     child: Container(

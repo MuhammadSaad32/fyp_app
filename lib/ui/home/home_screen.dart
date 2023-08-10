@@ -11,9 +11,14 @@ import '../../utils/images_utils.dart';
 import '../../widgets/custom_textField.dart';
 import '../post/add_detail_screen.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
@@ -99,19 +104,29 @@ class HomeScreen extends StatelessWidget {
                   expandedHeight: 50,
                   floating: true,
                   pinned: true,
-                  backgroundColor: Colors.white,
+                  backgroundColor: primaryColor,
                   flexibleSpace: FlexibleSpaceBar(
-                    title: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Image.asset(MyImgs.logo),
-                        Text(
-                          "A BEK",
-                          style: kSize20BlackW700Text,
-                        ),
-                        const Icon(Icons.search,color: Colors.white,)
+                    title: Padding(
+                      padding:EdgeInsets.symmetric(horizontal: getWidth(50)),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            "A",
+                            style: kSize24whiteW700Text,
+                          ),Text(
+                            "B",
+                            style: kSize24whiteW700Text,
+                          ),Text(
+                            "E",
+                            style: kSize24whiteW700Text,
+                          ),Text(
+                            "K",
+                            style: kSize24whiteW700Text,
+                          ),
 
-                      ],
+                        ],
+                      ),
                     ),
                     centerTitle: true,
                   ),
@@ -152,16 +167,19 @@ class HomeScreen extends StatelessWidget {
                             ),
                           ),
                         ),
-                        //SizedBox(height: getHeight(5)),
-                        // CustomTextField(
-                        //   keyboardType: TextInputType.text,
-                        //   length: 500,
-                        //   text: 'Search',
-                        //   onChanged: (value) {
-                        //     controller.updateSearchTerm(value);
-                        //   },
-                        //   controller: controller.searchController,
-                        // ),
+                        SizedBox(height: getHeight(5)),
+                        CustomTextField(
+                          keyboardType: TextInputType.text,
+                          length: 500,
+                          text: 'Search',
+                          onChanged: (value) {
+                            setState(() {
+                              controller.updateSearchTerm(value);
+                              Get.log("value is $value");
+                            });
+                          },
+                          controller: controller.searchController,
+                        ),
                         SizedBox(height: getHeight(10),),
                         controller.storage!=null?
                         CarouselSlider(
@@ -169,10 +187,11 @@ class HomeScreen extends StatelessWidget {
                             return Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Container(
+                                width: double.infinity,
                                 decoration: BoxDecoration(
                                   image: DecorationImage(
                                     image: NetworkImage(imageUrl),
-                                    fit: BoxFit.contain,
+                                    fit: BoxFit.cover,
                                   ),
                                 ),
                               ),
@@ -203,10 +222,11 @@ class HomeScreen extends StatelessWidget {
                                 return Padding(
                                   padding: const EdgeInsets.all(8.0),
                                   child: Container(
+                                    width: double.infinity,
                                     decoration: BoxDecoration(
                                       image: DecorationImage(
                                         image: NetworkImage(imageUrl),
-                                        fit: BoxFit.contain,
+                                        fit: BoxFit.cover,
                                       ),
                                     ),
                                   ),
@@ -259,7 +279,7 @@ class HomeScreen extends StatelessWidget {
                           ),
                         ),
                         SizedBox(
-                          height: getHeight(600),
+                          height: getHeight(500),
                           child: FutureBuilder<List<Map<String, dynamic>>>(
                             future: controller.searchController.text.isEmpty
                                 ? controller.selectedIndex == 0
@@ -314,7 +334,6 @@ class HomeScreen extends StatelessWidget {
                                 );
                               }
                               return SizedBox(
-                                height: getHeight(600),
                                 child: GridView.builder(
                                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                                     crossAxisCount: 2,

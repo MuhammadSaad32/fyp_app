@@ -14,11 +14,6 @@ class HomeController extends GetxController {
     searchTerm.value = term;
   }
   bool isSearching = false;
-  void toggleSearch() {
-      isSearching = !isSearching;
-      update();
-      searchController.clear();
-    }
   List<String> categories = [
     'All',
     'Cats',
@@ -70,6 +65,7 @@ class HomeController extends GetxController {
     final querySnapshot = await adsRef
         .where('title', isGreaterThanOrEqualTo: searchTerm)
         .get();
+    Get.log("Ads are $querySnapshot");
     return querySnapshot.docs.map((doc) => doc.data()).toList();
   }
 
