@@ -22,10 +22,6 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       title: 'ABEK',
       debugShowCheckedModeBanner: false,
-      // theme: ThemeData(
-      //   colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-      //   useMaterial3: true,
-      // ),
       home: const SplashScreen(),initialBinding: DataBindings(),
     );
   }
