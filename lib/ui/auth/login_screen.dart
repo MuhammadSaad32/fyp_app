@@ -11,6 +11,7 @@ import '../../utils/text_styles.dart';
 import '../../widgets/custom_button.dart';
 import '../../widgets/custom_textField.dart';
 import '../../widgets/custom_toasts.dart';
+import 'forgot_password_screen.dart';
 
 class LoginScreen extends StatelessWidget {
   final authController = Get.find<AuthController>();
@@ -98,7 +99,23 @@ class LoginScreen extends StatelessWidget {
                           RegExp('[ ]')),
                     ),
                     SizedBox(
-                      height: getHeight(40),
+                      height: getHeight(20),
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        // controller.image = null;
+                        Get.to(() => ForgotPasswordScreen());
+                      },
+                      child: Align(
+                        alignment: Alignment.centerRight,
+                        child: Text(
+                          "Forgot Your Password ?",
+                          style: kSize16BlackW400Text.copyWith(color: primaryColor),
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: getHeight(20),
                     ),
                     Center(
                         child: CustomButton(

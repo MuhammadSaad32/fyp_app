@@ -10,6 +10,7 @@ import 'package:fyp_app_olx/widgets/custom_button.dart';
 import 'package:get/get.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../utils/text_styles.dart';
+import 'full_image_screen.dart';
 
 class AdDetailsScreen extends StatelessWidget {
   final Map<String, dynamic> adData;
@@ -46,10 +47,25 @@ class AdDetailsScreen extends StatelessWidget {
                   enableInfiniteScroll: false,
                 ),
                 items: imageUrls
-                    .map((imageUrl) =>
-                        Image.network(imageUrl, fit: BoxFit.cover))
+                    .map(
+                      (imageUrl) => GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => FullImageScreen(imageUrl: imageUrl),
+                        ),
+                      );
+                    },
+                    child: Hero(
+                      tag: 'fullImage',
+                      child: Image.network(imageUrl, fit: BoxFit.cover),
+                    ),
+                  ),
+                )
                     .toList(),
               ),
+
             SizedBox(height: getHeight(16)),
             FirebaseAuth.instance.currentUser!.uid == adData['id']
                 ? const SizedBox.shrink()

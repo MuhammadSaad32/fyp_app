@@ -12,6 +12,8 @@ import 'package:fyp_app_olx/utils/colors_utils.dart';
 
 import '../../utils/images_utils.dart';
 import '../../utils/text_styles.dart';
+import '../../widgets/custom_button.dart';
+import '../post/edit_ad_screen.dart';
 import 'edit_profile_screen.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -343,11 +345,23 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                     ),
                                                   ),
                                                   SizedBox(width: getWidth(20)),
-                                                  IconButton(onPressed: (){
-                                                    setState(() {
-                                                      controller.deleteAd(context, adId, FirebaseAuth.instance.currentUser!.uid);
-                                                    });
-                                                  },icon: const Icon(Icons.delete),)
+                                                  Column(
+                                                    children: [
+                                                      // CustomButton(
+                                                      //   title: 'Edit',
+                                                      //   function: (){
+                                                      //     Get.to(()=>EditAdScreen(adData: adData,));
+                                                      //   },
+                                                      //   width: 100,
+                                                      //   height: 40,
+                                                      // ),
+                                                      IconButton(onPressed: (){
+                                                        setState(() {
+                                                          controller.deleteAd(context, adId, FirebaseAuth.instance.currentUser!.uid);
+                                                        });
+                                                      },icon: const Icon(Icons.delete),),
+                                                    ],
+                                                  ),
                                                 ],
                                               ),
                                             ),
